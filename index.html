@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discovery Alert - AI Trade Alerts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+           :root {
+            --primary: #0053b3;
+            --primary-dark: #003d80;
+            --secondary: #f5a623;
+            --secondary-dark: #d9860c;
+            --dark: #1a2b49;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --gray-light: #e9ecef;
+            --success: #28a745;
+            --border-radius: 6px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fff;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        
+        .cta-button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .cta-button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('download (4).jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 100px 0;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            font-family: 'Libre Baskerville', serif;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .primary-btn {
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-block;
+        }
+        
+        .primary-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .secondary-btn {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+            padding: 12px 30px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-block;
+        }
+        
+        .secondary-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+            font-family: 'Libre Baskerville', serif;
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Problem Section */
+        .problem-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .problem-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            text-align: center;
+        }
+        
+        .problem-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .problem-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+        }
+        
+        .problem-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        /* Service Cards */
+        .service-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+        
+        .service-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .service-header {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .service-body {
+            padding: 30px;
+        }
+        
+        .service-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .service-features {
+            list-style: none;
+            margin: 20px 0;
+        }
+        
+        .service-features li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .service-features li i {
+            color: var(--success);
+            margin-right: 10px;
+        }
+        
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            box-shadow: var(--box-shadow);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+        
+        .comparison-table th, .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        
+        .comparison-table th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: var(--gray-light);
+        }
+        
+        /* Workflow Section */
+        .workflow-container {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        .workflow-image {
+            flex: 1;
+        }
+        
+        .workflow-image img {
+            width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+        
+        .workflow-steps {
+            flex: 1;
+        }
+        
+        .step {
+            display: flex;
+            margin-bottom: 30px;
+            align-items: flex-start;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        
+        .step-content h4 {
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        /* Pricing Section */
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            position: relative;
+            transition: var(--transition);
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .pricing-card.popular {
+            border: 2px solid var(--secondary);
+        }
+        
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--secondary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+        
+        .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 20px 0;
+        }
+        
+        .price span {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--gray);
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin: 20px 0;
+        }
+        
+        .pricing-features li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .pricing-features li i {
+            color: var(--success);
+            margin-right: 10px;
+        }
+        
+        /* FAQ Section */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            margin-bottom: 20px;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 20px;
+            background: var(--gray-light);
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-answer {
+            padding: 20px;
+            background: white;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .problem-cards, .service-cards, .pricing-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .workflow-container {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 10px 10px;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-bullseye"></i> Discovery<span>Alert</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </nav>
+            <button class="cta-button">Free Trial</button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>AI Trade Alerts - Your Weekly Mining Intelligence</h1>
+            <p>Cut through 500+ daily ASX announcements. Get 5-10 weekly AI-powered alerts highlighting the drilling results that matter most. Alerts delivered within seconds of ASX release.</p>
+            <div class="hero-buttons">
+                <a href="#" class="primary-btn">Start 14-Day Free Trial</a>
+                <a href="#" class="secondary-btn">Watch the AI Trade Alerts Demo</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section>
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Most Investors Miss Discovery Opportunities</h2>
+                <p>Traditional methods of monitoring ASX announcements are inefficient and ineffective</p>
+            </div>
+            <div class="problem-cards">
+                <div class="problem-card">
+                    <img src="download (1).jpg" alt="Manual monitoring">
+                    <h3>Manual Monitoring Misses 90%</h3>
+                    <p>No individual can effectively scan through 500+ daily ASX announcements while identifying the truly significant drilling results.</p>
+                </div>
+                <div class="problem-card">
+                    <img src="download (2).jpg" alt="Commodity comparison">
+                    <h3>Can't Compare Commodities</h3>
+                    <p>Without a standardized metric like our GxM score, it's impossible to compare results across different commodities.</p>
+                </div>
+                <div class="problem-card">
+                    <img src="https://images.unsplash.com/photo-1580519542036-c47de6196ba5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80" alt="Reaction time">
+                    <h3>Reacts Too Late</h3>
+                    <p>By the time most investors hear about a discovery, the significant price movement has already occurred.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" style="background-color: var(--gray-light);">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Alert Services</h2>
+                <p>Dual alert system designed for both comprehensive coverage and critical opportunity escalation</p>
+            </div>
+            <div class="service-cards">
+                <div class="service-card">
+                    <div class="service-header">
+                        <h3>AI Trade Alerts</h3>
+                        <p>Primary Service (5-10 weekly)</p>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="AI Trade Alerts" class="service-img">
+                    <div class="service-body">
+                        <p>Our AI system scans, analyzes, and filters all ASX announcements to deliver only the most significant drilling results directly to your inbox.</p>
+                        <ul class="service-features">
+                            <li><i class="fas fa-check-circle"></i> GxM score analysis</li>
+                            <li><i class="fas fa-check-circle"></i> Market cap filtering</li>
+                            <li><i class="fas fa-check-circle"></i> Cash position assessment</li>
+                            <li><i class="fas fa-check-circle"></i> Drill context evaluation</li>
+                            <li><i class="fas fa-check-circle"></i> Comprehensive project details</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-header">
+                        <h3>Discovery Alerts</h3>
+                        <p>SMS Escalation (2-10 yearly)</p>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Discovery Alerts" class="service-img">
+                    <div class="service-body">
+                        <p>When all three critical factors align (GxM score, market cap, and discovery context), we automatically escalate with an immediate SMS alert.</p>
+                        <ul class="service-features">
+                            <li><i class="fas fa-check-circle"></i> Three-factor trigger system</li>
+                            <li><i class="fas fa-check-circle"></i> Instant SMS notification</li>
+                            <li><i class="fas fa-check-circle"></i> Highest-conviction opportunities</li>
+                            <li><i class="fas fa-check-circle"></i> Active monitoring mode</li>
+                            <li><i class="fas fa-check-circle"></i> Limited to exceptional discoveries</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comparison Table -->
+            <div style="margin-top: 50px;">
+                <h3 style="text-align: center; margin-bottom: 20px;">Service Comparison</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>AI Trade Alerts</th>
+                            <th>Discovery Alerts</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Frequency</td>
+                            <td>5-10 per week</td>
+                            <td>2-10 per year</td>
+                        </tr>
+                        <tr>
+                            <td>Delivery Method</td>
+                            <td>Email</td>
+                            <td>SMS + Email</td>
+                        </tr>
+                        <tr>
+                            <td>Purpose</td>
+                            <td>Comprehensive coverage</td>
+                            <td>Critical opportunity escalation</td>
+                        </tr>
+                        <tr>
+                            <td>Use Case</td>
+                            <td>Weekly intelligence</td>
+                            <td>Exceptional discoveries</td>
+                        </tr>
+                        <tr>
+                            <td>Activation</td>
+                            <td>Standard service</td>
+                            <td>Automatic when criteria align</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h2>How Our System Works</h2>
+                <p>Our proprietary Discovery IQ AI system scans, analyzes, and alerts in 5 streamlined steps</p>
+            </div>
+            <div class="workflow-container">
+                <div class="workflow-image">
+                    <img src="https://images.unsplash.com/photo-1533750349088-cd871a92f312?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="AI System Workflow">
+                </div>
+                <div class="workflow-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>ASX Announcements</h4>
+                            <p>Scan 500+ daily ASX announcements for drilling results</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Three-Factor Analysis</h4>
+                            <p>Apply GxM score, market cap, and drill context filters</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>AI Processing</h4>
+                            <p>Proprietary algorithm identifies significant results</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Alert Generation</h4>
+                            <p>Create comprehensive alert with all key metrics</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>Instant Delivery</h4>
+                            <p>Deliver alerts within seconds of ASX release</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" style="background-color: var(--gray-light);">
+        <div class="container">
+            <div class="section-title">
+                <h2>About Discovery Alert</h2>
+                <p>First-in-world solution for mining discovery intelligence</p>
+            </div>
+            <div class="workflow-container">
+                <div class="workflow-steps">
+                    <p>Discovery Alert is a specialized subscription service delivering real-time ASX mining discovery alerts. Our proprietary Discovery IQ AI system scans over 500 daily ASX announcements, applies our three-factor analysis (GxM score, market cap, drill context), and sends subscribers the highest-quality drilling results.</p>
+                    <p>Our system is 100% automated through quantified metrics, ensuring complete independence and objectivity. Companies cannot influence or pay to be included in our alerts.</p>
+                    <p>We cover 30+ commodities including precious metals, base metals, battery metals, and other strategic minerals, giving you a comprehensive view of the mining sector.</p>
+                </div>
+                <div class="workflow-image">
+                    <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="About Discovery Alert">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing">
+        <div class="container">
+            <div class="section-title">
+                <h2>Simple, Transparent Pricing</h2>
+                <p>Start with a 14-day free trial to experience the value of our alerts</p>
+            </div>
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <h3>Monthly Plan</h3>
+                    <div class="price">$99.99 <span>/month</span></div>
+                    <img src="https://images.unsplash.com/photo-1604594849809-dfedbc827105?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Monthly Plan" style="width: 100%; height: 200px; object-fit: cover; border-radius: var(--border-radius); margin-bottom: 20px;">
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check-circle"></i> 5-10 AI Trade Alerts weekly</li>
+                        <li><i class="fas fa-check-circle"></i> Discovery Alerts when criteria align</li>
+                        <li><i class="fas fa-check-circle"></i> Full access to web portal</li>
+                        <li><i class="fas fa-check-circle"></i> Educational resources</li>
+                        <li><i class="fas fa-check-circle"></i> Cancel anytime</li>
+                    </ul>
+                    <a href="#" class="primary-btn">Start Free Trial</a>
+                </div>
+                <div class="pricing-card popular">
+                    <div class="popular-badge">Most Popular</div>
+                    <h3>Annual Plan</h3>
+                    <div class="price">$995 <span>/year</span></div>
+                    <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1911&q=80" alt="Annual Plan" style="width: 100%; height: 200px; object-fit: cover; border-radius: var(--border-radius); margin-bottom: 20px;">
+                    <p style="color: var(--success); font-weight: 600;">Save $200+ compared to monthly</p>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check-circle"></i> Everything in Monthly plan</li>
+                        <li><i class="fas fa-check-circle"></i> Priority alert delivery</li>
+                        <li><i class="fas fa-check-circle"></i> Exclusive research reports</li>
+                        <li><i class="fas fa-check-circle"></i> Dedicated support</li>
+                        <li><i class="fas fa-check-circle"></i> 30-day money-back guarantee</li>
+                    </ul>
+                    <a href="#" class="primary-btn">Start Free Trial</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" style="background-color: var(--gray-light);">
+        <div class="container">
+            <div class="section-title">
+                <h2>Frequently Asked Questions</h2>
+                <p>Everything you need to know about our service</p>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What is the GxM score? <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>The GxM (Gold Equivalent Multiplier) score is our proprietary metric that converts drilling results across all commodities into a standardized gold equivalent value. This allows for direct comparison of results from different commodities and helps identify the most significant discoveries.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How quickly are alerts delivered after an ASX release? <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our AI system typically delivers alerts within seconds of an ASX announcement being published. This is significantly faster than the 20-minute delayed data most retail investors receive, giving you a substantial time advantage.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can companies pay to be featured in alerts? <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>No. Our system is 100% automated and based on quantified metrics. Companies cannot influence or pay to be included in our alerts. This ensures complete independence and objectivity in our service.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What commodities do you cover? <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We cover 30+ commodities including precious metals (gold, silver), base metals (copper, nickel, zinc), battery metals (lithium, cobalt, graphite), and other strategic minerals. Our GxM scoring system allows us to compare results across all these commodities.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contact Us</h2>
+                <p>Have questions? Get in touch with our team</p>
+            </div>
+            <div class="workflow-container">
+                <div class="workflow-image">
+                    <img src="download.jpg" alt="Contact Us">
+                </div>
+                <div class="workflow-steps">
+                    <form style="display: grid; gap: 20px;">
+                        <div>
+                            <label for="name" style="display: block; margin-bottom: 5px; font-weight: 500;">Name</label>
+                            <input type="text" id="name" style="width: 100%; padding: 12px; border: 1px solid var(--gray-light); border-radius: var(--border-radius);">
+                        </div>
+                        <div>
+                            <label for="email" style="display: block; margin-bottom: 5px; font-weight: 500;">Email</label>
+                            <input type="email" id="email" style="width: 100%; padding: 12px; border: 1px solid var(--gray-light); border-radius: var(--border-radius);">
+                        </div>
+                        <div>
+                            <label for="message" style="display: block; margin-bottom: 5px; font-weight: 500;">Message</label>
+                            <textarea id="message" rows="5" style="width: 100%; padding: 12px; border: 1px solid var(--gray-light); border-radius: var(--border-radius);"></textarea>
+                        </div>
+                        <button type="submit" class="primary-btn" style="width: 100%; text-align: center;">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section style="background-color: var(--primary); color: white; text-align: center;">
+        <div class="container">
+            <h2 style="font-size: 2.2rem; margin-bottom: 20px;">Start Your 14-Day Free Trial Today</h2>
+            <p style="max-width: 700px; margin: 0 auto 30px; font-size: 1.2rem;">Experience the power of AI-driven mining intelligence with no commitment</p>
+            <a href="#" class="primary-btn" style="background-color: white; color: var(--primary);">Get Started Now</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h3>Discovery Alert</h3>
+                    <p>AI-powered mining intelligence delivering real-time ASX discovery alerts to investors.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#">AI Trade Alerts</a></li>
+                        <li><a href="#">Discovery Alerts</a></li>
+                        <li><a href="#">Metal Equivalent Calculator</a></li>
+                        <li><a href="#">Learning Resources</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">How It Works</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Disclaimer</a></li>
+                        <li><a href="#">Compliance</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Discovery Alert. All rights reserved. Discovery Alert provides financial intelligence but does not provide personalized investment advice. Past performance is not indicative of future results. Developed by Mohibul.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple FAQ toggle functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+                const icon = question.querySelector('i');
+                icon.classList.toggle('fa-chevron-down');
+                icon.classList.toggle('fa-chevron-up');
+            });
+        });
+    </script>
+</body>
+</html>
